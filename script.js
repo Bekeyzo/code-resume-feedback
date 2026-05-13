@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:5001";
+const API_URL = "https://bekeyzo.pythonanywhere.com";
 
 const adviceForm = document.getElementById("adviceForm");
 const adviceList = document.getElementById("adviceList");
