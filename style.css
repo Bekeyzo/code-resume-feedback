@@ -119,3 +119,63 @@ code {
         padding-bottom: 20px;
     }
 }
+.feedback-section {
+    margin-top: 40px;
+    border-top: 1px solid #262b2c;
+    padding-top: 24px;
+}
+
+.feedback-section h2 {
+    color: #6a9955;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+#adviceForm {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+#adviceForm input,
+#adviceForm textarea {
+    background: #101314;
+    border: 1px solid #3a4042;
+    color: #d4d4d4;
+    padding: 10px;
+    font-family: "Courier New", monospace;
+}
+
+#adviceForm textarea {
+    min-height: 100px;
+}
+
+#adviceForm button {
+    background: #4ec9b0;
+    color: #050607;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+}
+
+.advice-card {
+    border-left: 2px solid #4ec9b0;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #101314;
+}
+
+.advice-text {
+    color: #ce9178;
+}
+
+.advice-author {
+    color: #569cd6;
+    margin-top: 8px;
+}
+
+.advice-role {
+    color: #6a9955;
+    font-size: 13px;
+}

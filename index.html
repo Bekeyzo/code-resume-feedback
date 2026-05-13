@@ -6,6 +6,7 @@
     <title>Emmanuel Ezekiel | Code Resume</title>
     <link rel="stylesheet" href="style.css">
 </head>
+<script src="script.js"></script>
 <body>
 
     <main class="editor">
@@ -57,6 +58,28 @@
                     <li>PROBLEM_SOLVER</li>
                     <li>BACKEND_LEARNER</li>
                 </ul>
+            </section>
+
+            <section class="feedback-section">
+
+                <h2>// ENGINEER ADVICE WALL</h2>
+
+                <form id="adviceForm">
+
+                    <input type="text" id="name" placeholder="Your name" required>
+
+                    <input type="text" id="role" placeholder="Role e.g Backend Engineer">
+
+                    <input type="url" id="social_link" placeholder="LinkedIn or GitHub link">
+
+                    <textarea id="advice" placeholder="Leave an advice for Emmanuel..." required></textarea>
+
+                    <button type="submit">Submit Advice</button>
+
+                </form>
+
+                <div id="adviceList"></div>
+
             </section>
         </aside>
 
