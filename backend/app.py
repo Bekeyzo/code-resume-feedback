@@ -68,6 +68,7 @@ def create_comment():
 
 @app.route("/comments", methods=["GET"])
 def get_comment():
+
     comments = Comment.query.order_by(Comment.created_at.desc()).all()
     result = [comment.to_dict() for comment in comments]
 
@@ -78,6 +79,24 @@ def get_comment():
             "comments": result
         }
     }, 200
+
+@app.route("/comments/<int:comment_id>", methods=["DELETE"])
+def delete_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+
+    if not comment:
+        return {
+            "status": "error",
+            "message": "Comment not found"
+        }, 404
+    
+    db.session.delete(comment)
+    db.session.commit()
+
+    return {
+        "status": "success",
+        "message": "Comment deleted successfully"
+    }
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

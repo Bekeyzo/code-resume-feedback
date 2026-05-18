@@ -22,6 +22,9 @@ async function fetchAdvice() {
                     ? `<a href="${comment.social_link}" target="_blank">View profile</a>`
                     : ""
             }
+            <button onclick="deleteAdvice(${comment.id})">
+                Delete
+            </button>
         `;
 
         adviceList.appendChild(card);
@@ -51,3 +54,9 @@ adviceForm.addEventListener("submit", async (event) => {
 });
 
 fetchAdvice();
+    async function deleteAdvice(id) {
+        await fetch(`${API_URL}/comments/${id}`, {
+            method: "DELETE"
+        });
+        fetchAdvice();
+    }
