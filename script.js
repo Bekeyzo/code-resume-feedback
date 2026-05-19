@@ -18,11 +18,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 <p class="advice-text">"${comment.advice}"</p>
                 <p class="advice-author">- ${comment.name}</p>
                 <p class="advice-role">${comment.role || "Visitor"}</p>
+
                 ${
                     comment.social_link
                         ? `<a href="${comment.social_link}" target="_blank">View profile</a>`
                         : ""
                 }
+
                 <button onclick="deleteAdvice(${comment.id})">
                     Delete
                 </button>
@@ -66,30 +68,31 @@ document.addEventListener("DOMContentLoaded", () => {
         fetchAdvice();
     };
 
+    window.editAdvice = async function (comment) {
+        const updatedName = prompt("Edit name:", comment.name);
+        const updatedRole = prompt("Edit role:", comment.role || "");
+        const updatedSocialLink = prompt("Edit social link:", comment.social_link || "");
+        const updatedAdvice = prompt("Edit advice:", comment.advice);
+
+        if (!updatedName || !updatedAdvice) {
+            return;
+        }
+
+        await fetch(`${API_URL}/comments/${comment.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: updatedName,
+                role: updatedRole,
+                social_link: updatedSocialLink,
+                advice: updatedAdvice
+            })
+        });
+
+        fetchAdvice();
+    };
+
     fetchAdvice();
 });
-window.editAdvice = async function (comment) {
-    const updatedName = prompt("Edit name:", comment.name);
-    const updatedRole = prompt("Edit role:", comment.role || "");
-    const updatedSocialLink = prompt("Edit social link:", comment.social_link || "");
-    const updatedAdvice = prompt("Edit advice:", comment.advice);
-
-    if (!updatedName || !updatedAdvice) {
-        return;
-    }
-
-    await fetch(`${API_URL}/comments/${comment.id}`, {
-        method: "PATCH",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: updatedName,
-            role: updatedRole,
-            social_link: updatedSocialLink,
-            advice: updatedAdvice
-        })
-    });
-
-    fetchAdvice();
-};
