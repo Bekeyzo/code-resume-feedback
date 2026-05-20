@@ -194,3 +194,20 @@ code {
     background: #ff5f56;
     color: #0d0d0d;
 }
+#formMessage {
+    margin: 10px 0;
+    font-size: 13px;
+}
+
+.success-message {
+    color: #4ec9b0;
+}
+
+.error-message {
+    color: #ff5f56;
+}
+
+#adviceForm button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

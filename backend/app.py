@@ -31,30 +31,49 @@ def create_comment():
             "status": "error",
             "message": "Request body is required"
         }, 400
-    
-    name = data.get("name")
-    role = data.get("role")
-    advice = data.get("advice")
-    social_link = data.get("social_link")
+
+    name = data.get("name", "").strip()
+    role = data.get("role", "").strip()
+    advice = data.get("advice", "").strip()
+    social_link = data.get("social_link", "").strip()
 
     if not name:
         return {
             "status": "error",
             "message": "Name is required"
         }, 400
-    
+
+    if len(name) < 2:
+        return {
+            "status": "error",
+            "message": "Name must be at least 2 characters"
+        }, 400
+
     if not advice:
         return {
             "status": "error",
             "message": "Advice is required"
         }, 400
-    
+
+    if len(advice) < 10:
+        return {
+            "status": "error",
+            "message": "Advice must be at least 10 characters"
+        }, 400
+
+    if social_link and not social_link.startswith(("http://", "https://")):
+        return {
+            "status": "error",
+            "message": "Social link must start with http:// or https://"
+        }, 400
+
     comment = Comment(
         name=name,
         role=role,
         advice=advice,
         social_link=social_link
     )
+
     db.session.add(comment)
     db.session.commit()
 
@@ -107,32 +126,68 @@ def update_comment(comment_id):
             "status": "error",
             "message": "Comment not found"
         }, 404
-    
+
     data = request.get_json()
+
     if not data:
         return {
             "status": "error",
             "message": "Request body is required"
         }, 400
-    
-    name = data.get("name")
-    role = data.get("role")
-    advice = data.get("advice")
-    social_link = data.get("social_link")
 
-    if name:
+    if "name" in data:
+        name = data.get("name", "").strip()
+
+        if not name:
+            return {
+                "status": "error",
+                "message": "Name cannot be empty"
+            }, 400
+
+        if len(name) < 2:
+            return {
+                "status": "error",
+                "message": "Name must be at least 2 characters"
+            }, 400
+
         comment.name = name
-    if role:
-        comment.role = role
-    if advice:
+
+    if "role" in data:
+        comment.role = data.get("role", "").strip()
+
+    if "advice" in data:
+        advice = data.get("advice", "").strip()
+
+        if not advice:
+            return {
+                "status": "error",
+                "message": "Advice cannot be empty"
+            }, 400
+
+        if len(advice) < 10:
+            return {
+                "status": "error",
+                "message": "Advice must be at least 10 characters"
+            }, 400
+
         comment.advice = advice
-    if social_link:
+
+    if "social_link" in data:
+        social_link = data.get("social_link", "").strip()
+
+        if social_link and not social_link.startswith(("http://", "https://")):
+            return {
+                "status": "error",
+                "message": "Social link must start with http:// or https://"
+            }, 400
+
         comment.social_link = social_link
 
     db.session.commit()
+
     return {
         "status": "success",
-        "message": "Comment is updated successfully",
+        "message": "Comment updated successfully",
         "data": {
             "comment": comment.to_dict()
         }
